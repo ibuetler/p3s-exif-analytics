@@ -138,11 +138,10 @@ decimal degrees = degrees + (minutes/60) + (seconds/3600)
 <p>
 
 ```python
-get_float = lambda x: float(x[0]) / float(x[1])
 def convert_to_degrees(value):
-    d = get_float(value[0])
-    m = get_float(value[1])
-    s = get_float(value[2])
+    d = float(value[0][0]) / float(value[0][1])
+    m = float(value[1][0]) / float(value[1][1])
+    s = float(value[2][0]) / float(value[2][1])
     return d + (m / 60.0) + (s / 3600.0)
 ```
 </p>
