@@ -176,3 +176,6 @@ if longitude_ref != "E":
 
 ## Task: Visualize on Google Maps
 
+For this task there is no more knowledge needed then for the visualization for the log aggregation Task. With the dictionary from the subtask before, the simplekml library can be used easely.
+
+Here is a picture of a entry in google maps:
