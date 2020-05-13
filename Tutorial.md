@@ -96,7 +96,7 @@ import os
 
 path = '../Pictures/'
 for filename in glob.glob(os.path.join(path, '*.jpg')):
-img = Image.open(filename)
+ img = Image.open(filename)
 
 ```
 
@@ -106,4 +106,12 @@ img = Image.open(filename)
 {1: {1: 'N', 2: ((7, 1), (59, 1), (5064, 100)), 3: 'E', 4: ((98, 1), (17, 1), (3186, 100)), 5: b'\x00', 6: (9547, 1127), 7: ((10, 1), (6, 1), (25, 1)), 12: 'K', 13: (0, 1), 16: 'T', 17: (5929, 18), 23: 'T', 24: (5929, 18), 29: '2017:02:23', 31: (5, 1)}, 2:
 ```
 ### Converting the GPSinfo into latitude and longitude
+
+To visualize the location of our images on Google Maps, we need the GPS information as longitude and latitude. Pillow returns the GPS information as sexagesimal degree format. This means they are given as degrees, minutes, and seconds : 40° 26′ 46″ N 79° 58′ 56″ W.
+
+There are 60 minutes in a degree and 60 seconds in a minute. Therefore, to convert from a degrees minutes seconds format to a decimal degrees format, one may use the formula:
+
+
+
+
 
