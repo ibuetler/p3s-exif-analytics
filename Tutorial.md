@@ -182,3 +182,5 @@ Here is a picture of a entry in google maps:
 ![GoogleMaps1](/media/challenge/png/Google_map_subtask1.png)
 
 There is currently no data in the description. This will be added in the next task. The name is set to picture + the number of the picture.
+
+## Task: Enrich Google Maps Entry
