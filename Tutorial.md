@@ -45,3 +45,47 @@ from PIL.ExifTags import TAGS
 
 img = Image.open('Pictures/UNADJUSTEDNONRAW_thumb_4c1d.jpg')
 
+```
+Now, the exif data of the picture should be obtained. Exchangeable Image File Format (EXIF) is a standard that defines specific information related to an image or other media captured by a digital camera. It is capable of storing such important data as camera exposure, date/time the image was captured, and even GPS location. We can use a function called \_getexif() with Pillow to get all Exif data of the image.
+
+```python
+from PIL import Image
+from PIL.ExifTags import TAGS
+
+img = Image.open('Pictures/UNADJUSTEDNONRAW_thumb_4c1d.jpg')
+exif_data = img._getexif()
+
+```
+The getexif() function returns a dictionary with the numeric code of the exif information with the corresponding value. If we print the dictionary on the console the following structure appears:
+
+```python
+{36864: b'0231', 37121: b'\x01\x02\x03\x00', 37377: (111625, 10737), 36867: '2020:02:04 12:07:50', 36868: '2020:02:04 12:07:50', 37378: (54823, 32325), 37379: (253137, 27052), 37380: (0, 1), 37383: 5, 37385: 24, 37386: (17, 4), 40961: 65535, 40962: 768, 41989: 26, 41990: 0, 271: 'Apple', 40963: 1024, 37521: '619', 37522: '619', 272: 'iPhone 11 Pro Max', 37396: (2002, 1505, 2213, 1324), 531: 1, 41495: 2, 33434: (1, 1348), 282: (72, 1), 283: (72, 1), 33437: (9, 5), 41729: b'\x01', 34850: 2, 34853: {1: 'N', 2: ((13, 1), (26, 1), (2826, 100)), 3: 'E', 4: ((103, 1), (51, 1), (3172, 100)), 5: b'\x00', 6: (393983, 10059), 12: 'K', 13: (0, 1), 16: 'T', 17: (1110289, 4096), 23: 'T', 24: (1110289, 4096), 31: (1020238, 1567)}, 34855: 32, 296: 2, 41986: 0, 40960: b'0100', 41987: 0, 305: '13.3', 42034: ((807365, 524263), (6, 1), (9, 5), (12, 5)), 42035: 'Apple', 42036: 'iPhone 11 Pro Max back triple camera 4.25mm f/1.8', 306: '2020:02:04 12:07:50', 34665: 200, 37500: b'Apple iOS\x00\x00\x01MM\x00\x1b\x00\x01\x00\t\x00\x00\x00\x01\x00\x00\x00\x0b\x00\x02\x00\x07\x00\x00\x02.\x00\x00\x01X\x00\x03\x00\x07\x00\x00\x00h\x00\x00\x03\x86\x00\x04\x00\t\x00\x00\x00\x01\x00\x00\x00\x01\x00\x05\x00\t\x00\x00\x00\x01\x00\x00\x00\xc2'}
+
+```
+
+The key is always a certain information of the image as a numerical code. For example, the geolocation data corresponds to the code 34853. A complete documentation of the codes would be found here: https://www.exiv2.org/tags.html
+
+But we can write our own function in Python that parses the Exif tags to their corresponding value. For this we now use our second import the TAGS module. With TAGS.get(code) we get the corresponding value for an Exif code. For example for the code 34853 we get the value 'GPSInfo'. Here is a function that takes an Exif dictionary and returns a new dictionary with the resolved codes:
+
+```python
+from PIL import Image
+from PIL.ExifTags import TAGS
+
+def get_structured_exif(exif_dictionary):
+    structured_dictionary = {}
+    for (key, val) in exif_dictionary.items():
+        structured_dictionary[TAGS.get(key)] = val
+
+    return structured_dictionary
+```
+
+If we print the new dictionary to the console, it is now more readable:
+
+```
+{'ExifVersion': b'0231', 'ComponentsConfiguration': b'\x01\x02\x03\x00', 'ShutterSpeedValue': (111625, 10737), 'DateTimeOriginal': '2020:02:04 12:07:50', 'DateTimeDigitized': '2020:02:04 12:07:50', 'ApertureValue': (54823, 32325), 'BrightnessValue': (253137, 27052), 'ExposureBiasValue': (0, 1), 'MeteringMode': 5, 'Flash': 24, 'FocalLength': (17, 4), 'ColorSpace': 65535, 'ExifImageWidth': 768, 'FocalLengthIn35mmFilm': 26, 'SceneCaptureType': 0, 'Make': 'Apple', 'ExifImageHeight': 1024, 'SubsecTimeOriginal': '619', 'SubsecTimeDigitized': '619', 'Model': 'iPhone 11 Pro Max', 'SubjectLocation': (2002, 1505, 2213, 1324), 'YCbCrPositioning': 1, 'SensingMethod': 2, 'ExposureTime': (1, 1348), 'XResolution': (72, 1), 'YResolution': (72, 1), 'FNumber': (9, 5), 'SceneType': b'\x01', 'ExposureProgram': 2, 'GPSInfo': {1: 'N', 2: ((13, 1), (26, 1), (2826, 100)), 3: 'E', 4: ((103, 1), (51, 1), (3172, 100)), 5: b'\x00', 6: (393983, 10059), 12: 'K', 13: (0, 1), 16: 'T', 17: (1110289, 4096), 23: 'T', 24: (1110289, 4096), 31: (1020238, 1567)}, 'ISOSpeedRatings': 32, 'ResolutionUnit': 2, 'ExposureMode': 0, 'FlashPixVersion': b'0100', 'WhiteBalance': 0, 'Software': '13.3', 'LensSpecification': ((807365, 524263), (6, 1), (9, 5), (12, 5)), 'LensMake': 'Apple', 'LensModel': 'iPhone 11 Pro Max back triple camera 4.25mm f/1.8', 'DateTime': '2020:02:04 12:07:50', 'ExifOffset': 200, 'MakerNote': b'Apple iOS\x00\x00\x01MM\x00\x1b\x00\x01\x00\t\x00\x00\x00\x01\x00\x00\x00\x0b\x00\x02\x00\x07\x00\x00\x02.\x00\x00\x01X\x00\x03\x000\xbc\x00\x07\x00\t\x00\x00\x00\x01\x00\x00\x00\x01\x00\x08\x00\n\x00\x00\x00\x03\x00\x00\x03\xee\0'}
+
+```
+
+### Theory about glob
+
+To solve this task efficiently, another library called glob is used.
