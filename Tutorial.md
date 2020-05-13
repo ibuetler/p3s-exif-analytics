@@ -178,3 +178,7 @@ if longitude_ref != "E":
 For this task there is no more knowledge needed then for the visualization for the log aggregation Task. With the dictionary from the subtask before, the simplekml library can be used easely.
 
 Here is a picture of a entry in google maps:
+
+![GoogleMaps1](/media/challenge/png/Google_map_subtask1.png)
+
+There is currently no data in the description. This will be added in the next task. The name is set to picture + the number of the picture.
