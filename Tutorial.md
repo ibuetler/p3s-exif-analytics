@@ -23,7 +23,7 @@ pipenv --python 3 sync
 pipenv --python 3 shell
 ```
 
-## Task: Extract geolocation data from pictures
+## Task: Extract GPS data from pictures
 
 In this task our goal is first to receive the geolocation data from the given pictures. 
 
@@ -88,4 +88,22 @@ If we print the new dictionary to the console, it is now more readable:
 
 ### Theory about glob
 
-To solve this task efficiently, another library called glob is used.
+To solve this task efficiently, another library called glob is used. To solve this task efficiently, another library called glob is used. In the glob library there is a module glob, which allows us to iterate very efficiently over all files in a folder. The glob module finds all the pathnames matching a specified pattern according to the rules used by the Unix shell, although results are returned in arbitrary order. Since in our task all pictures in the folder end with '.jpg'. We can use glob in the following way to iterate over all pictures:
+
+```python
+import glob
+import os
+
+path = '../Pictures/'
+for filename in glob.glob(os.path.join(path, '*.jpg')):
+img = Image.open(filename)
+
+```
+
+**Task:** Now, you should have all the knowledge to iterate over all pictures and create a dictionary which holds as the key the number of the picture (First picture = 1) and as the value the GPSinfo. For example the first entry of the dictionary could look like this:
+
+```python
+{1: {1: 'N', 2: ((7, 1), (59, 1), (5064, 100)), 3: 'E', 4: ((98, 1), (17, 1), (3186, 100)), 5: b'\x00', 6: (9547, 1127), 7: ((10, 1), (6, 1), (25, 1)), 12: 'K', 13: (0, 1), 16: 'T', 17: (5929, 18), 23: 'T', 24: (5929, 18), 29: '2017:02:23', 31: (5, 1)}, 2:
+```
+### Converting the GPSinfo into latitude and longitude
+
