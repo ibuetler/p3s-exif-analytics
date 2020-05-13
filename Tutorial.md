@@ -149,5 +149,30 @@ def convert_to_degrees(value):
 </details>
 
 
-Hovewer this is still not the actual value for the latitude and longitude. The reference value of them is neede. This meands compared to the equatorial plane, the latitude is completed by a letter N (hemisphere) or S depending on whether one is located in the northern or southern hemisphere. Compared to the Greenwich meridian, the longitude is completed by a letter W or E depending on whether you are located in the west or east.
+Hovewer this is still not the actual value for the latitude and longitude. The reference value of them is needed. This means compared to the equatorial plane, the latitude is completed by a letter N (hemisphere) or S depending on whether one is located in the northern or southern hemisphere. Compared to the Greenwich meridian, the longitude is completed by a letter W or E depending on whether you are located in the west or east.
+
+If the reference value is N, the converted latitude degree must be multiplied with -1 and if the reference value of the longitude is E then the converted longitude must be multiplied with -1.
+
+Here is an example, where the converting function is called and the resulting value is checked for the reference value:
+
+```python
+latitude = dict_gps[1][2]
+latitude_ref = dict_gps[1][1]
+longitude = dict_gps[1][4]
+longitude_ref = dict_gps[1][3]
+latitude_converted = convert_to_degrees(latitude)
+if latitude_ref != "N":
+  latitude_converted *= -1
+longitude_converted = convert_to_degrees(longitude)
+if longitude_ref != "E":
+  longitude_converted *= -1
+```
+
+**Task:** Create a function which takes the previous dictionary as a parameter. The function should return a new dictionary with the converted latitude and longitude as value. For example the first entry of the dictionary could look like this:
+
+```
+{1: [7.9974, 98.29218333333333],
+```
+
+## Task: Visualize on Google Maps
 
