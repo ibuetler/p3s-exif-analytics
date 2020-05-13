@@ -111,7 +111,43 @@ To visualize the location of our images on Google Maps, we need the GPS informat
 
 There are 60 minutes in a degree and 60 seconds in a minute. Therefore, to convert from a degrees minutes seconds format to a decimal degrees format, one may use the formula:
 
+decimal degrees = degrees + (minutes/60) + (seconds/3600)
+
+In our dictionary from the previous task we can receive the latitude and longitude in the degrees minutes and seconds format in the following way: (example is for the picture with the key 1)
+
+```python
+  latitude = dict_gps[1][2]
+  longitude = dict_gps[1][4]
+
+```
+For example for the latitude we have now the following data:
+
+```python
+((7, 1), (59, 1), (5064, 100))
+```
+
+The first pair is for the degree, the second for minutes and the third for seconds. To receive the actual value the first value ot the pair must be divided by the second. Example for degrees = 7/1.
+
+Afterwards the formula from above can be used:
+
+decimal degrees = degrees + (minutes/60) + (seconds/3600)
+
+**Optional Task:** You can try to create a function on your own, for converting the two formats. Otherwise click below for a solution.
+
+<details><summary>Solution for conversion</summary>
+<p>
+
+```python
+get_float = lambda x: float(x[0]) / float(x[1])
+def convert_to_degrees(value):
+    d = get_float(value[0])
+    m = get_float(value[1])
+    s = get_float(value[2])
+    return d + (m / 60.0) + (s / 3600.0)
+```
+</p>
+</details>
 
 
-
+Hovewer this is still not the actual value for the latitude and longitude. The reference value of them is neede. This meands compared to the equatorial plane, the latitude is completed by a letter N (hemisphere) or S depending on whether one is located in the northern or southern hemisphere. Compared to the Greenwich meridian, the longitude is completed by a letter W or E depending on whether you are located in the west or east.
 
