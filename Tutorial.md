@@ -184,3 +184,23 @@ Here is a picture of a entry in google maps:
 There is currently no data in the description. This will be added in the next task. The name is set to picture + the number of the picture.
 
 ## Task: Enrich Google Maps Entry
+
+In this task the goal is that the visualization from the previous task should contain more information.
+
+More precisely, a point on the map should be represented as follows:
+
+* DateTimeOriginal
+* Make of the camera which took the picture
+* Model of the camera which took the picture
+
+Here is a picture of a point in Google Maps after the enrichment:
+
+![GoogleMaps2](/media/challenge/png/Google_map_enriched.png)
+
+If you did not solve the advanced task in the log aggregation task, you will need to know, how to add a line break in the kml point description. Since KML uses XML, a line break can be added with the br tag:
+
+```python
+description_string = 'Date: 27.01.2020' + '<br/>'
+```
+
+**Task:** Create a new kml file with the following information in the description: Date, Make, Model. All the information can be found easely if you use the labeled format from the previous task.
