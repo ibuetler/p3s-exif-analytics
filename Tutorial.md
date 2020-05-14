@@ -88,7 +88,7 @@ If we print the new dictionary to the console, it is now more readable:
 
 ### Theory about glob
 
-To solve this task efficiently, another library called glob is used. To solve this task efficiently, another library called glob is used. In the glob library there is a module glob, which allows us to iterate very efficiently over all files in a folder. The glob module finds all the pathnames matching a specified pattern according to the rules used by the Unix shell, although results are returned in arbitrary order. Since in our task all pictures in the folder end with '.jpg'. We can use glob in the following way to iterate over all pictures:
+To solve this task efficiently, another library called glob is used. In the glob library there is a module glob, which allows us to iterate over all files in a folder. The glob module finds all the pathnames matching a specified pattern according to the rules used by the Unix shell, although results are returned in arbitrary order. Since in our task all pictures in the folder end with '.jpg'. We can use glob in the following way to iterate over all pictures:
 
 ```python
 import glob
@@ -126,7 +126,7 @@ For example for the latitude we have now the following data:
 ((7, 1), (59, 1), (5064, 100))
 ```
 
-The first pair is for the degree, the second for minutes and the third for seconds. To receive the actual value the first value ot the pair must be divided by the second. Example for degrees = 7/1.
+The first pair is for the degree, the second for minutes and the third for seconds. To receive the actual value the first value ot the pair must be divided by the second. (Example for degrees: d = 7/1.)
 
 Afterwards the formula from above can be used:
 
