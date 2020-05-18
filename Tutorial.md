@@ -6,7 +6,7 @@ This python3 exercise is about anonymizing extracting information from pictures.
  - Visualize the geolocation data on Google Maps
  - Enrich the visualization with more information from pictures
 
-## Preperation
+## Preparation
 
 ### Step 1: Download the pictures
 Please download the pictures from `RESOURCES` to /home/hacker/Downloads
@@ -25,19 +25,19 @@ pipenv --python 3 shell
 
 ## Task: Extract GPS data from pictures
 
-In this task our goal is first to receive the geolocation data from the given pictures. 
+In this task, our goal is first to receive the geolocation data from the given pictures. 
 
 ### Theory about Pillow
 
-The Python Imaging Library, or PIL for short, is one of the core libraries for image manipulation in Python. Unfortunately, its development has stagnated, with its last release in 2009. Hovewer, there is an fork of the old library called Pillow (PIL as well for short) and it supports Python 3, wehereas the old library is only for Python 2.
+The Python Imaging Library, or PIL for short, is one of the core libraries for image manipulation in Python. Unfortunately, its development has stagnated, with its last release in 2009. However, there is a fork of the old library called Pillow (PIL as well for short) and it supports Python 3, whereas the old library is only for Python 2.
 
-For the time being we are interested in two imports from the library. These are the following two:
+For the time being, we are interested in two imports from the library. These are the following two:
 
 ```python
 from PIL import Image
 from PIL.ExifTags import TAGS
 ```
-With the image import it is possible to open an image, for this the library offers the open() function. This function takes the path to the image and opens it. Here is an example how to open an image:
+With the image import, it is possible to open an image, for this, the library offers the open() function. This function takes the path to the image and opens it. Here is an example of how to open an image:
 
 ```python
 from PIL import Image
@@ -46,7 +46,7 @@ from PIL.ExifTags import TAGS
 img = Image.open('Pictures/UNADJUSTEDNONRAW_thumb_4c1d.jpg')
 
 ```
-Now, the exif data of the picture should be obtained. Exchangeable Image File Format (EXIF) is a standard that defines specific information related to an image or other media captured by a digital camera. It is capable of storing such important data as camera exposure, date/time the image was captured, and even GPS location. We can use a function called \_getexif() with Pillow to get all Exif data of the image.
+Now, the EXIF data of the picture should be obtained. Exchangeable Image File Format (EXIF) is a standard that defines specific information related to an image or other media captured by a digital camera. It is capable of storing such important data as camera exposure, date/time the image was captured, and even GPS location. We can use a function called \_getexif() with Pillow to get all Exif data of the image.
 
 ```python
 from PIL import Image
@@ -65,7 +65,7 @@ The getexif() function returns a dictionary with the numeric code of the exif in
 
 The key is always a certain information of the image as a numerical code. For example, the geolocation data corresponds to the code 34853. A complete documentation of the codes would be found here: https://www.exiv2.org/tags.html
 
-But we can write our own function in Python that parses the Exif tags to their corresponding value. For this we now use our second import the TAGS module. With TAGS.get(code) we get the corresponding value for an Exif code. For example for the code 34853 we get the value 'GPSInfo'. Here is a function that takes an Exif dictionary and returns a new dictionary with the resolved codes:
+But we can write our own function in Python that parses the Exif tags to their corresponding value. For this, we now use our second import the TAGS module. With TAGS.get(code) we get the corresponding value for an Exif code. For example for the code 34853 we get the value 'GPSInfo'. Here is a function that takes an Exif dictionary and returns a new dictionary with the resolved codes:
 
 ```python
 from PIL import Image
@@ -88,7 +88,7 @@ If we print the new dictionary to the console, it is now more readable:
 
 ### Theory about glob
 
-To solve this task efficiently, another library called glob is used. In the glob library there is a module glob, which allows us to iterate over all files in a folder. The glob module finds all the pathnames matching a specified pattern according to the rules used by the Unix shell, although results are returned in arbitrary order. Since in our task all pictures in the folder end with '.jpg'. We can use glob in the following way to iterate over all pictures:
+To solve this task efficiently, another library called glob is used. In the glob library, there is a module glob, which allows us to iterate over all files in a folder. The glob module finds all the pathnames matching a specified pattern according to the rules used by the Unix shell, although results are returned in arbitrary order. Since in our task all pictures in the folder end with '.jpg'. We can use glob in the following way to iterate over all pictures:
 
 ```python
 import glob
@@ -107,13 +107,13 @@ for filename in glob.glob(os.path.join(path, '*.jpg')):
 ```
 ### Converting the GPSinfo into latitude and longitude
 
-To visualize the location of our images on Google Maps, we need the GPS information as longitude and latitude. Pillow returns the GPS information as sexagesimal degree format. This means they are given as degrees, minutes, and seconds : 40° 26′ 46″ N 79° 58′ 56″ W.
+To visualize the location of our images on Google Maps, we need the GPS information as longitude and latitude. Pillow returns the GPS information as sexagesimal degree format. This means they are given as degrees, minutes, and seconds: 40° 26′ 46″ N 79° 58′ 56″ W.
 
 There are 60 minutes in a degree and 60 seconds in a minute. Therefore, to convert from a degrees minutes seconds format to a decimal degrees format, one may use the formula:
 
 decimal degrees = degrees + (minutes/60) + (seconds/3600)
 
-In our dictionary from the previous task we can receive the latitude and longitude in the degrees minutes and seconds format in the following way: (example is for the picture with the key 1)
+In our dictionary from the previous task, we can receive the latitude and longitude in the degrees minutes and seconds format in the following way: (example is for the picture with the key 1)
 
 ```python
   latitude = dict_gps[1][2]
@@ -126,7 +126,7 @@ For example for the latitude we have now the following data:
 ((7, 1), (59, 1), (5064, 100))
 ```
 
-The first pair is for the degree, the second for minutes and the third for seconds. To receive the actual value the first value ot the pair must be divided by the second. (Example for degrees: d = 7/1.)
+The first pair is for the degree, the second for minutes and the third for seconds. To receive the actual value the first value of the pair must be divided by the second. (Example for degrees: d = 7/1.)
 
 Afterwards the formula from above can be used:
 
@@ -148,7 +148,7 @@ def convert_to_degrees(value):
 </details>
 
 
-Hovewer this is still not the actual value for the latitude and longitude. The reference value of them is needed. This means compared to the equatorial plane, the latitude is completed by a letter N (hemisphere) or S depending on whether one is located in the northern or southern hemisphere. Compared to the Greenwich meridian, the longitude is completed by a letter W or E depending on whether you are located in the west or east.
+However, this is still not the actual value for the latitude and longitude. The reference value of them is needed. This means compared to the equatorial plane, the latitude is completed by a letter N (hemisphere) or S depending on whether one is located in the northern or southern hemisphere. Compared to the Greenwich meridian, the longitude is completed by a letter W or E depending on whether you are located in the west or east.
 
 If the reference value is N, the converted latitude degree must be multiplied with -1 and if the reference value of the longitude is E then the converted longitude must be multiplied with -1.
 
@@ -167,7 +167,7 @@ if longitude_ref != "E":
   longitude_converted *= -1
 ```
 
-**Task:** Create a function which takes the previous dictionary as a parameter. The function should return a new dictionary with the converted latitude and longitude as value. For example the first entry of the dictionary could look like this:
+**Task:** Create a function which takes the previous dictionary as a parameter. The function should return a new dictionary with the converted latitude and longitude as value. For example, the first entry of the dictionary could look like this:
 
 ```
 {1: [7.9974, 98.29218333333333],
@@ -175,9 +175,9 @@ if longitude_ref != "E":
 
 ## Task: Visualize on Google Maps
 
-For this task there is no more knowledge needed then for the visualization for the log aggregation Task. With the dictionary from the subtask before, the simplekml library can be used easely.
+For this task, there is no more knowledge needed then for the visualization for the log aggregation Task. With the dictionary from the subtask before, the simplekml library can be used easily.
 
-Here is a picture of a entry in google maps:
+Here is a picture of an entry in google maps:
 
 ![GoogleMaps1](/media/challenge/png/Google_map_subtask1.png)
 
@@ -185,7 +185,7 @@ There is currently no data in the description. This will be added in the next ta
 
 ## Task: Enrich Google Maps Entry
 
-In this task the goal is that the visualization from the previous task should contain more information.
+In this task, the goal is that the visualization from the previous task should contain more information.
 
 More precisely, a point on the map should be represented as follows:
 
@@ -203,4 +203,4 @@ If you did not solve the advanced task in the log aggregation task, you will nee
 description_string = 'Date: 27.01.2020' + '<br/>'
 ```
 
-**Task:** Create a new kml file with the following information in the description: Date, Make, Model. All the information can be found easely if you use the labeled format from the previous task.
+**Task:** Create a new KML file with the following information in the description: Date, Make, Model. All the information can be found easily if you use the labelled format from the previous task.
