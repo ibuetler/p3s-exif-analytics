@@ -132,10 +132,8 @@ Afterwards the formula from above can be used:
 
 decimal degrees = degrees + (minutes/60) + (seconds/3600)
 
-**Optional Task:** You can try to create a function on your own, for converting the two formats. Otherwise click below for a solution.
+**Optional Task:** You can try to create a function on your own, for converting the two formats. Otherwise, below is the solution.
 
-<details><summary>Solution for conversion</summary>
-<p>
 
 ```python
 def convert_to_degrees(value):
@@ -144,8 +142,6 @@ def convert_to_degrees(value):
     s = float(value[2][0]) / float(value[2][1])
     return d + (m / 60.0) + (s / 3600.0)
 ```
-</p>
-</details>
 
 
 However, this is still not the actual value for the latitude and longitude. The reference value of them is needed. This means compared to the equatorial plane, the latitude is completed by a letter N (hemisphere) or S depending on whether one is located in the northern or southern hemisphere. Compared to the Greenwich meridian, the longitude is completed by a letter W or E depending on whether you are located in the west or east.
